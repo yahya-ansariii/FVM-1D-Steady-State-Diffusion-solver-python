@@ -120,31 +120,45 @@ result.index = result.index + 1
 print("\n\n")
 print(result)
 
-# show graph
+#plot and show graph
+# adding initial and final conditions to the list, as list contains values at nodes
+temp.insert(0, ta)
+temp.append(tb)
+Texact.insert(0, ta)
+Texact.append(tb)
+g.insert(0, 0)
+g.append(l)
+
+graph = pd.DataFrame({'Temperature Numerical': temp, 'Temperature Exact': Texact}, index=g)
+# graph.plot()
+plt.plot(graph)
+plt.title("Temperature-Distance Graph")
+plt.xlabel("Distance(m)")
+plt.ylabel("Temperature")
+figure = plt.gcf()
+print("\n********** Plot Graph complete **********\n")
+print("\n* * * * *   Graph Displayed   * * * * *\n")
+print("\n*****     Close Graph to Continue     *****\n")
+plt.show()
+
+
+
+# save choice
 while choice != "q":
-    print('''\n\t[ y ] Plot graph
-        [ q ] Exit
+    print('''\n\t[ y ] Save result to excel file and graph to png file.
+    
+        [ q ] Exit without saving result
         ''')
     choice = input("\nEnter yout choice :\t")
     if choice == "y":
-        print("\nPlotting graph .........................\n")
-        # adding initial and final conditions to the list, as list contains values at nodes
-        temp.insert(0, ta)
-        # list size increased because of previous insertion so last index becomes n so we add at end n+1
-        temp.insert(n+1, tb)
-        Texact.insert(0, ta)
-        Texact.insert(n+1, tb)
-        g.insert(0, 0)
-        g.insert(n+1, l)
-
-        graph = pd.DataFrame(
-            {'Temperature': temp, 'Temperature Exact': Texact}, index=g)
-        graph.plot()
-        plt.show()
-        print("\n********** Plot Graph complete **********")
+        result.insert(0, 'Distance(x)', g)
+        result.insert(0, 'Node no.', range(1, 1 + len(result))) #add serial no  column at the start of the DataFrame
+        result.to_excel("output/FVM.xlsx", sheet_name = 'Output', index = False) #.to_excel to export excel file
+        figure.savefig("output/graph.png") #save graph
+        print("\n\n*************** Export to excel and png complete. ***************\n\n")
         break
     elif choice == "q":
-        print("\n***** Exit without graph plot *****")
+        print("\n***** Result not saved *****")
         break
     else:
         print("\n Invalid Choice, Try again !")
