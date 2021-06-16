@@ -15,24 +15,24 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-print("\n\t\t Finite Volume Method for Steady State Diffusion \n")
+print("\n\t\t Finite Volume Method for 1D Steady State Diffusion \n")
 
 # Switch case for type of numerical
 choice = ""
 while choice != "q":
     print("""\t[ 1 ] Diffusion without Source
 
-        [ 2 ] Diffusion with source
+        [ 2 ] Diffusion with uniform source
 
         [ q ] Exit\n""")
     choice = input("\n\tEnter Choice :\t")
 
     if choice == "1":
-        print("\nDiffusion Withour Source")
+        print("\n\t\tDiffusion Without Source\n")
         q = 0
         break
     elif choice == "2":
-        print("\nDiffusion with Source")
+        print("\n\t\tDiffusion with Uniform Source\n")
         q = float(input("\n\tEnter uniform heat generation q in W/m2:   "))
         break
     elif choice == "q":
@@ -59,6 +59,7 @@ temp = [0]*n
 Err = [0]*n
 Texact = [0]*n
 g = [0]*n
+g1 = [0]*n
 
 # setting up equations in tdma format
 dx = l/n
@@ -106,6 +107,7 @@ for i in range(0, n):
     g[i] = dx*0.5 + (dx * i)
     Texact[i] = A1 * g[i] * g[i] + A2 * g[i] + ta
     Err[i] = ((temp[i] - Texact[i]) * 100*2) / (temp[i] + Texact[i])
+    g1[i]=g[i]#create copy of g for excel
 
 # create output tuple
 OUTPUT = list(zip(beta, D, alpha, c, A, C, temp, Texact, Err))
@@ -131,14 +133,17 @@ g.append(l)
 
 graph = pd.DataFrame({'Temperature Numerical': temp, 'Temperature Exact': Texact}, index=g)
 # graph.plot()
-plt.plot(graph)
+plt.plot(graph , marker = '.')
 plt.title("Temperature-Distance Graph")
 plt.xlabel("Distance(m)")
 plt.ylabel("Temperature")
+plt.grid()
 figure = plt.gcf()
-print("\n********** Plot Graph complete **********\n")
-print("\n* * * * *   Graph Displayed   * * * * *\n")
-print("\n*****     Close Graph to Continue     *****\n")
+print('''\n********** Plot Graph complete **********
+
+* * * * *   Graph Displayed   * * * * *
+
+*****     Close Graph to Continue     *****\n''')
 plt.show()
 
 
@@ -151,11 +156,11 @@ while choice != "q":
         ''')
     choice = input("\nEnter yout choice :\t")
     if choice == "y":
-        result.insert(0, 'Distance(x)', g)
+        result.insert(0, 'Distance(x)', g1)
         result.insert(0, 'Node no.', range(1, 1 + len(result))) #add serial no  column at the start of the DataFrame
         result.to_excel("output/FVM.xlsx", sheet_name = 'Output', index = False) #.to_excel to export excel file
         figure.savefig("output/graph.png") #save graph
-        print("\n\n*************** Export to excel and png complete. ***************\n\n")
+        print("\n\n*************** Export complete! Check output folder. ***************\n\n")
         break
     elif choice == "q":
         print("\n***** Result not saved *****")
