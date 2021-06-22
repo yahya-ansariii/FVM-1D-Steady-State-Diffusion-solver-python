@@ -1,10 +1,15 @@
 # FVM-1D-Steady State Diffusion solver
 ## Python code for Finite Volume Method for 1 Dimension Steady State Diffusion
 
-Read _[FVM-1D.pdf](FVM-1D.pdf)_ in the repository to understand the finite volume method for 1D steady state diffusion.
+Read _[FVM-1D.pdf](FVM-1D.pdf)_ in the repository to understand the finite volume method for 1D steady state diffusion. If you want to study about Finite Volume Methods in detail then refer **'An Introduction to Computational Fluid Dynamics - The Finite Volume Method'** by _H K Versteeg and W Malalasekera._
+
 The _governing equation_ used in the python code is
 
 ![governing equation](images/ge.PNG)
+
+The Exact (Analytical) solution is given by 
+
+![Exact solution](images/an.PNG)
 
 The python code has all the necessary comments to understand the solver.
 
