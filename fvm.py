@@ -138,6 +138,7 @@ plt.title("Temperature-Distance Graph")
 plt.xlabel("Distance(m)")
 plt.ylabel("Temperature")
 plt.grid()
+plt.legend(['Temperature Numerical', 'Temperature Exact(Analytical)'])
 figure = plt.gcf()
 print('''\n********** Plot Graph complete **********
 
