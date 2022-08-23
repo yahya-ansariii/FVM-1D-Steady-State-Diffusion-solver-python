@@ -155,7 +155,7 @@ while choice != "q":
     
         [ q ] Exit without saving result
         ''')
-    choice = input("\nEnter yout choice :\t")
+    choice = input("\nEnter your choice :\t")
     if choice == "y":
         result.insert(0, 'Distance(x)', g1)
         result.insert(0, 'Node no.', range(1, 1 + len(result))) #add serial no  column at the start of the DataFrame
